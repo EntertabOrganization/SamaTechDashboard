@@ -1,26 +1,196 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Colors */
+  --color-blue-sovereign: #005BC2;
+  --color-blue-pulse: #0078FF;
+  --color-blue-precision: #3393FF;
+  --color-white: #FFFFFF;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-blue-mist: #E9F0F9;
+  --color-blue-haze: #BDD4EE;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-ink-900: #121A23;
+  --color-ink-700: #212D3A;
+  --color-ink-500: #425367;
+  --color-ink-300: #8494A6;
+  --color-ink-200: #B6C1CD;
+  --color-ink-100: #DCE4EE;
+  --color-ink-50: #F4F7FB;
+
+  --color-gold-600: #D6A24B;
+  --color-gold-400: #E3BF82;
+  --color-gold-200: #F1DFC1;
+
+  --color-teal-600: #1F9E8C;
+  --color-teal-400: #2AD5BD;
+  --color-teal-200: #7FE6D7;
+
+  --color-success: #3FA66E;
+  --color-warning: #E3A63A;
+  --color-danger: #E85C4A;
+
+
+  /* Border Radius */
+  --radius-checkbox: 4px;
+  --radius-tooltip: 8px;
+  --radius-input: 12px;
+  --radius-media: 18px;
+  --radius-card: 28px;
+  --radius-panel: 40px;
+
+
+  /* Gradients */
+  --background-image-gradient-mark: linear-gradient(
+    106.62deg,
+    #3393FF 0%,
+    #0078FF 45%,
+    #005BC2 100%
+  );
+
+  --background-image-gradient-navy: linear-gradient(
+    180deg,
+    #121A23 0%,
+    #212D3A 100%
+  );
+
+  --background-image-gradient-mist: linear-gradient(
+    180deg,
+    #FFFFFF 0%,
+    #E9F0F9 100%
+  );
+
+
+  /* Shadows */
+  --shadow-xs: 0px 1px 2px 0px #121A230F;
+  --shadow-sm: 0px 2px 8px 0px #121A230F;
+  --shadow-md: 0px 8px 24px 0px #121A2314;
+  --shadow-lg: 0px 20px 48px 0px #121A231A;
+  --shadow-brand: 0px 12px 32px 0px #0078FF3D;
+
+
+  
+
+
+  /* Typography */
+  --text-display-1: 76px;
+  --text-display-2: 60px;
+
+  --text-h1: 44px;
+  --text-h2: 34px;
+  --text-h3: 26px;
+  --text-h4: 20px;
+
+  --text-lead: 20px;
+  --text-body: 16px;
+  --text-body-small: 14px;
+  --text-caption: 13px;
+  --text-eyebrow: 12px;
+  --text-numeral: 44px;
+
+
+  /* Line Heights */
+  --leading-display-1: 1.02;
+  --leading-display-2: 1.05;
+
+  --leading-h1: 1.08;
+  --leading-h2: 1.15;
+  --leading-h3: 1.2;
+  --leading-h4: 1.3;
+
+  --leading-lead: 1.55;
+  --leading-body: 1.65;
+  --leading-body-small: 1.6;
+  --leading-caption: 1.45;
+
+
+  /* Letter spacing */
+  --tracking-eyebrow: 0.14em;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-quicksand), sans-serif;
+}
+
+.website-content[data-ready="false"] {
+  visibility: hidden;
+}
+
+html:has(.website-loader) {
+  overflow: hidden;
+}
+
+.website-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 100dvh;
+  padding: 24px;
+  background: radial-gradient(ellipse at top, #dbeaff, #f4f7fb 65%);
+  color: var(--color-ink-900);
+  text-align: center;
+}
+
+.website-loader__spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--color-blue-haze);
+  border-top-color: var(--color-blue-pulse);
+  border-radius: 50%;
+  animation: website-loader-spin 0.8s linear infinite;
+}
+
+.website-loader__brand {
+  margin: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.website-loader__label {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-ink-500);
+}
+
+@keyframes website-loader-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .website-loader__spinner {
+    animation: none;
+  }
+}
+
+html[lang="ar"] body,
+html[lang="ar"] :is(h1, h2, h3, h4, h5, h6),
+html[lang="ar"] .website-loader__brand,
+[lang="ar"] button {
+  font-family: var(--font-arabic), sans-serif;
+  letter-spacing: normal;
+}
+
+html[lang="ar"] :is(h1, h2, h3) {
+  line-height: 1.4;
+}
+
+html[dir="rtl"] .fa-arrow-right-long,
+html[dir="rtl"] .directional-arrow {
+  transform: scaleX(-1);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-montserrat), sans-serif;
 }

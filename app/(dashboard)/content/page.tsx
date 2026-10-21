@@ -29,25 +29,25 @@ export default function ContentPage() {
         </h2>
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <ContentAreaCard
-            href="/dashboard/content/home"
+            href="/content/home"
             icon={<HomeIcon />}
             title="Homepage"
             description="Hero, pillars intro, who we serve, why Samatechs, track record and FAQ."
           />
           <ContentAreaCard
-            href="/dashboard/content/services"
+            href="/content/services"
             icon={<BriefcaseIcon />}
             title="Services"
             description="The services page, how we work, and the three pillars."
           />
           <ContentAreaCard
-            href="/dashboard/content/about"
+            href="/content/about"
             icon={<UsersIcon />}
             title="About"
             description="Who we are, mission and vision, differentiators and founders."
           />
           <ContentAreaCard
-            href="/dashboard/content/settings"
+            href="/content/settings"
             icon={<MailIcon />}
             title="Contact"
             description="The contact details come from Site settings."
@@ -64,13 +64,13 @@ export default function ContentPage() {
         </h2>
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <ContentAreaCard
-            href="/dashboard/content/seo"
+            href="/content/seo"
             icon={<SearchIcon />}
             title="SEO"
             description="Titles, descriptions and social images for every page."
           />
           <ContentAreaCard
-            href="/dashboard/content/settings"
+            href="/content/settings"
             icon={<SettingsIcon />}
             title="Site settings"
             description="Name, logos, contact details, social links and footer."

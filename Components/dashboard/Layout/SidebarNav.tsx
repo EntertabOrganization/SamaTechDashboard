@@ -6,9 +6,9 @@ import { cn } from "@/Components/dashboard/ui";
 // import { NavIcon } from "@/Components/dashboard/Layout/icons";
 import { cmsNav } from "@/Components/dashboard/Layout/nav";
 
-// "/cms" is the parent of every other page, so it must match exactly.
+// "/" is the parent of every other page, so it must match exactly.
 const isActive = (pathname: string, href: string) =>
-  href === "/cms" ? pathname === "/cms" : pathname.startsWith(href);
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
 
 export default function SidebarNav() {
   const pathname = usePathname();

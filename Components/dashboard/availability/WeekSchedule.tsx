@@ -1,6 +1,6 @@
 import SettingsCard from "@/Components/dashboard/shared/SettingsCard";
 
-const days = [
+export const WEEK_DAYS = [
   { key: "sun", label: "Sunday", on: true },
   { key: "mon", label: "Monday", on: true },
   { key: "tue", label: "Tuesday", on: true },
@@ -14,14 +14,22 @@ const timeInput =
   "h-9 rounded-lg border border-ink-100 bg-white px-2.5 text-xs font-medium text-ink-900 focus:border-blue-pulse focus:outline-none focus:ring-2 focus:ring-blue-pulse/20";
 
 
-export default function WeekSchedule() {
+/** A day's switch and hours, as the form shows them. */
+export interface DaySchedule {
+  on: boolean;
+  start: string;
+  end: string;
+}
+
+/** `schedule` fills the form from the saved availability, keyed like "sun"; days left out use the defaults. */
+export default function WeekSchedule({ schedule }: { schedule?: Partial<Record<string, DaySchedule>> }) {
   return (
     <SettingsCard
       title="Weekly schedule"
       description="Days and hours when visitors can book a consultation."
     >
       <ul className="mt-4 divide-y divide-ink-100 border-t border-ink-100">
-        {days.map((day) => (
+        {WEEK_DAYS.map((day) => (
           <li
             key={day.key}
             className="flex flex-wrap items-center gap-x-4 gap-y-2 px-5 py-3.5"
@@ -31,7 +39,7 @@ export default function WeekSchedule() {
               id={`${day.key}-enabled`}
               name={`${day.key}_enabled`}
               type="checkbox"
-              defaultChecked={day.on}
+              defaultChecked={schedule?.[day.key]?.on ?? day.on}
               className="peer sr-only"
             />
             <label
@@ -47,7 +55,7 @@ export default function WeekSchedule() {
               <input
                 type="time"
                 name={`${day.key}_start`}
-                defaultValue="09:00"
+                defaultValue={schedule?.[day.key]?.start ?? "09:00"}
                 aria-label={`${day.label} start time`}
                 className={timeInput}
               />
@@ -57,7 +65,7 @@ export default function WeekSchedule() {
               <input
                 type="time"
                 name={`${day.key}_end`}
-                defaultValue="16:00"
+                defaultValue={schedule?.[day.key]?.end ?? "16:00"}
                 aria-label={`${day.label} end time`}
                 className={timeInput}
               />

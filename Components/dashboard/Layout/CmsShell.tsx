@@ -8,11 +8,13 @@ interface CmsShellProps {
   user: CmsUser;
   /** Logo for the sidebar (e.g. your white <Image />). */
   brand?: ReactNode;
+  /** Signs out (POST /auth/logout) from the sidebar's log out button. */
+  logoutAction?: () => void | Promise<void>;
   children: ReactNode;
 }
 
-export default function CmsShell({ user, brand, children }: CmsShellProps) {
-  const sidebar = <SidebarContent user={user} brand={brand} />;
+export default function CmsShell({ user, brand, logoutAction, children }: CmsShellProps) {
+  const sidebar = <SidebarContent user={user} brand={brand} logoutAction={logoutAction} />;
 
   return (
     <div className="min-h-screen bg-ink-50 lg:grid lg:grid-cols-[16rem_1fr]">

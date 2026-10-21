@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { WEBSITE_URL } from "@/lib/api";
 
 /** Same glass recipe as the website navbar: translucent white, 1px border, soft shadow, blur. */
 export default function Topbar({ mobileNav }: { mobileNav: ReactNode }) {
@@ -8,7 +9,7 @@ export default function Topbar({ mobileNav }: { mobileNav: ReactNode }) {
       {mobileNav}
       <div className="flex-1" />
       <Link
-        href="/"
+        href={WEBSITE_URL}
         target="_blank"
         rel="noreferrer"
         className="text-xs font-medium text-ink-500 transition-colors hover:text-ink-900"

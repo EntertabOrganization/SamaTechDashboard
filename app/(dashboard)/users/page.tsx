@@ -1,33 +1,34 @@
+"use client";
+
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import PageHeader from "@/Components/dashboard/Layout/PageHeader";
+import { useSessionUser } from "@/Components/dashboard/Layout/SessionShell";
 import Pagination from "@/Components/dashboard/users/Pagination";
-// import UserStateCard from "@/Components/dashboard/users/UserStateCard";
 import UserList from "@/Components/dashboard/users/UserList";
 import UserRow from "@/Components/dashboard/users/UserRow";
 import UserStatusCard from "@/Components/dashboard/users/UserStateCard";
+import { listUsers } from "@/lib/api";
+import { formatDate } from "@/lib/format";
+import { useApi } from "@/lib/useApi";
 
-import { Suspense } from "react";
+const LIMIT = 20;
 
-type UsersPageProps = {
-  searchParams: Promise<{ page?: string }>;
-};
-
-export default function UsersPage(props: UsersPageProps) {
+export default function UsersPage() {
   return (
     <Suspense fallback={<div>Loading users...</div>}>
-      <UsersContent {...props} />
+      <UsersContent />
     </Suspense>
   );
 }
 
-async function UsersContent({
-  searchParams,
-}: UsersPageProps) {
-  const { page: rawPage } = await searchParams;
-  const page = Math.max(1, Number(rawPage) || 1);
+function UsersContent() {
+  const searchParams = useSearchParams();
+  const page = Math.max(1, Number(searchParams.get("page")) || 1);
+  const me = useSessionUser();
 
-  // TODO(backend): GET /users?page=${page}&limit=20
-  // then totalPages = Math.ceil(total / limit)
-  const totalPages = 1;
+  const { data } = useApi(() => listUsers({ page, limit: LIMIT }), String(page));
+  const totalPages = data?.meta.totalPages ?? 1;
 
   return (
     <div className="space-y-6">
@@ -40,22 +41,25 @@ async function UsersContent({
       <div className="grid items-start gap-4 lg:grid-cols-[1.7fr_1fr]">
         <div className="space-y-4">
           <UserList>
-            {/* TODO(backend): replace these two placeholder rows with users.map(...) */}
-            <UserRow
-              name="User name"
-              email="name@organization.com"
-              createdAt="Added on"
-            />
-            <UserRow name="User name" email="name@organization.com" />
+            {data?.data.map((user) => (
+              <UserRow
+                key={user.id}
+                name={user.name || user.email}
+                email={user.email}
+                createdAt={formatDate(user.createdAt)}
+              />
+            ))}
           </UserList>
 
           <Pagination page={page} totalPages={totalPages} />
         </div>
 
+        {/* The API has no per-user status, so the card shows the signed-in account. */}
         <UserStatusCard
-          userId="{user.id}"
-          userName="{user.name}"
+          userId={me?.id}
+          userName={me?.name || me?.email || ""}
           status="active"
+          isSelf
         />
       </div>
     </div>

@@ -4,10 +4,10 @@ import { HomeIcon, SettingsIcon, UsersIcon } from "@/Components/dashboard/conten
 
 // Fixed shortcuts: these are links to pages, not data.
 const actions = [
-  { href: "/dashboard/content/home", label: "Edit the homepage", icon: <HomeIcon width={16} height={16} /> },
-  { href: "/dashboard/availability", label: "Update availability", icon: <ClockIcon width={16} height={16} /> },
-  { href: "/dashboard/users", label: "Invite a user", icon: <UsersIcon width={16} height={16} /> },
-  { href: "/dashboard/content/settings", label: "Site settings", icon: <SettingsIcon width={16} height={16} /> },
+  { href: "/content/home", label: "Edit the homepage", icon: <HomeIcon width={16} height={16} /> },
+  { href: "/availability", label: "Update availability", icon: <ClockIcon width={16} height={16} /> },
+  { href: "/users", label: "Invite a user", icon: <UsersIcon width={16} height={16} /> },
+  { href: "/content/settings", label: "Site settings", icon: <SettingsIcon width={16} height={16} /> },
 ];
 
 export default function QuickActions() {

@@ -12,6 +12,8 @@ interface SidebarContentProps {
   user: CmsUser;
   /** Logo. Falls back to a text wordmark. */
   brand?: ReactNode;
+  /** Signs out (POST /auth/logout on the backend). */
+  logoutAction?: () => void | Promise<void>;
 }
 
 const initials = (name: string) =>
@@ -23,7 +25,7 @@ const initials = (name: string) =>
     .toUpperCase();
 
 /** Same navy gradient as the website footer. Used in the desktop sidebar and the mobile drawer. */
-export default function SidebarContent({ user, brand }: SidebarContentProps) {
+export default function SidebarContent({ user, brand, logoutAction }: SidebarContentProps) {
   return (
     <div className="flex h-full flex-col bg-linear-to-b from-[#0E1823] to-[#1A2736]">
       <div className="flex h-16 shrink-0 items-center gap-2 border-b border-white/10 px-5">
@@ -49,8 +51,7 @@ export default function SidebarContent({ user, brand }: SidebarContentProps) {
             <p className="truncate text-sm font-medium text-white">{user.name}</p>
             <p className="truncate text-[11px] text-slate-400">{user.email}</p>
           </div>
-          {/* TODO: point this at your real logout endpoint. */}
-          <form action="/api/auth/logout" method="post">
+          <form action={logoutAction}>
             <IconButton
               type="submit"
               label="Log out"

@@ -1,3 +1,5 @@
+"use client";
+
 import PageHeader from "@/Components/dashboard/Layout/PageHeader";
 import { CalendarIcon, ClockIcon, MailIcon } from "@/Components/dashboard/Layout/icons";
 import { UsersIcon } from "@/Components/dashboard/content/icons";
@@ -9,10 +11,42 @@ import {
 import OverviewPanel from "@/Components/dashboard/overview/OverviewPanel";
 import QuickActions from "@/Components/dashboard/overview/QuickActions";
 import StatCard from "@/Components/dashboard/overview/StatCard";
-// import { redirect } from "next/navigation";
+import { listConsultations, listContactMessages, listUsers } from "@/lib/api";
+import { consultationToday, dayAndMonth, formatSlot, timeAgo } from "@/lib/format";
+import { useApi } from "@/lib/useApi";
+
+const ROWS = 3;
+
+async function loadOverview() {
+  const [pending, newMessages, latestMessages, confirmed, users] = await Promise.all([
+    listConsultations({ status: "PENDING", limit: ROWS }),
+    listContactMessages({ status: "NEW", limit: 1 }),
+    listContactMessages({ limit: ROWS }),
+    // The API sorts by when the booking was made, so take a wide page and pick the next dates here.
+    listConsultations({ status: "CONFIRMED", limit: 100 }),
+    listUsers({ limit: 1 }),
+  ]);
+
+  const today = consultationToday();
+  const upcoming = confirmed.data
+    .filter((c) => c.date.slice(0, 10) >= today)
+    .sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time))
+    .slice(0, ROWS);
+
+  return {
+    pendingCount: pending.meta.total,
+    pending: pending.data,
+    newMessagesCount: newMessages.meta.total,
+    latestMessages: latestMessages.data,
+    confirmedCount: confirmed.meta.total,
+    upcoming,
+    usersCount: users.meta.total,
+  };
+}
 
 export default function Page() {
-  //  redirect("/dashboard/login");
+  const { data } = useApi(loadOverview, "overview");
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -21,35 +55,34 @@ export default function Page() {
         description="What needs your attention on the website."
       />
 
-      {/* TODO(backend): replace each "—" with the real number */}
       <section aria-label="Key numbers" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
           highlight
-          href="/consultations?status=pending"
+          href="/consultations?status=PENDING"
           icon={<CalendarIcon />}
           label="Pending requests"
-          value="—"
+          value={data?.pendingCount ?? "—"}
           linkLabel="Review requests"
         />
         <StatCard
           href="/messages?status=new"
           icon={<MailIcon />}
           label="New messages"
-          value="—"
+          value={data?.newMessagesCount ?? "—"}
           linkLabel="Open inbox"
         />
         <StatCard
-          href="/consultations?status=confirmed"
+          href="/consultations?status=CONFIRMED"
           icon={<ClockIcon />}
           label="Confirmed consultations"
-          value="—"
+          value={data?.confirmedCount ?? "—"}
           linkLabel="See schedule"
         />
         <StatCard
-          href="/dashboard/users"
+          href="/users"
           icon={<UsersIcon />}
           label="Active users"
-          value="—"
+          value={data?.usersCount ?? "—"}
           linkLabel="Manage users"
         />
       </section>
@@ -58,49 +91,47 @@ export default function Page() {
         <div className="space-y-4">
           <OverviewPanel
             title="Pending consultation requests"
-            href="/consultations?status=pending"
+            href="/consultations?status=PENDING"
           >
-            {/* TODO(backend): replace these placeholder rows with the latest pending requests */}
-            <PendingRequestItem
-              href="#"
-              organization="Organization"
-              requesterName="Requester name"
-              slot="Requested slot"
-            />
-            <PendingRequestItem
-              href="#"
-              organization="Organization"
-              requesterName="Requester name"
-              slot="Requested slot"
-            />
+            {data?.pending.map((request) => (
+              <PendingRequestItem
+                key={request.id}
+                href="/consultations?status=PENDING"
+                organization={request.company || request.name}
+                requesterName={request.name}
+                slot={formatSlot(request.date, request.time)}
+              />
+            ))}
           </OverviewPanel>
 
-          <OverviewPanel title="Latest messages" href="/dashboard/messages">
-            {/* TODO(backend): replace these placeholder rows with the latest messages */}
-            <MessageItem
-              href="#"
-              name="Sender name"
-              preview="The first line of the message appears here."
-              receivedAt="Received"
-              unread
-            />
-            <MessageItem
-              href="#"
-              name="Sender name"
-              preview="The first line of the message appears here."
-              receivedAt="Received"
-            />
+          <OverviewPanel title="Latest messages" href="/messages">
+            {data?.latestMessages.map((message) => (
+              <MessageItem
+                key={message.id}
+                href={`/messages/${message.id}`}
+                name={message.name}
+                preview={message.message}
+                receivedAt={timeAgo(message.createdAt)}
+                unread={message.status === "NEW"}
+              />
+            ))}
           </OverviewPanel>
         </div>
 
         <div className="space-y-4">
           <OverviewPanel
             title="Upcoming consultations"
-            href="/consultations?status=confirmed"
+            href="/consultations?status=CONFIRMED"
           >
-            {/* TODO(backend): replace these placeholder rows with the next confirmed consultations */}
-            <UpcomingItem href="#" day="--" month="---" requesterName="Requester name" time="--:--" />
-            <UpcomingItem href="#" day="--" month="---" requesterName="Requester name" time="--:--" />
+            {data?.upcoming.map((consultation) => (
+              <UpcomingItem
+                key={consultation.id}
+                href="/consultations?status=CONFIRMED"
+                {...dayAndMonth(consultation.date)}
+                requesterName={consultation.name}
+                time={consultation.time}
+              />
+            ))}
           </OverviewPanel>
 
           <QuickActions />

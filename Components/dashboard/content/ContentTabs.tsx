@@ -3,12 +3,12 @@ import Link from "next/link";
 export type ContentTabId = "pages" | "home" | "services" | "about" | "seo" | "settings";
 
 const tabs: Array<{ id: ContentTabId; label: string; href: string }> = [
-  { id: "pages", label: "Pages", href: "/dashboard/content" },
-  { id: "home", label: "Homepage", href: "/dashboard/content/home" },
-  { id: "services", label: "Services", href: "/dashboard/content/services" },
-  { id: "about", label: "About", href: "/dashboard/content/about" },
-  { id: "seo", label: "SEO", href: "/dashboard/content/seo" },
-  { id: "settings", label: "Site settings", href: "/dashboard/content/settings" },
+  { id: "pages", label: "Pages", href: "/content" },
+  { id: "home", label: "Homepage", href: "/content/home" },
+  { id: "services", label: "Services", href: "/content/services" },
+  { id: "about", label: "About", href: "/content/about" },
+  { id: "seo", label: "SEO", href: "/content/seo" },
+  { id: "settings", label: "Site settings", href: "/content/settings" },
 ];
 
 /** Links between the content screens. Each page says which one is active. */

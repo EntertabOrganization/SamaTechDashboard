@@ -1,9 +1,9 @@
-import CmsShell from "@/Components/dashboard/Layout/CmsShell";
+import SessionShell from "@/Components/dashboard/Layout/SessionShell";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <CmsShell user={{ name: "Admin User", email: "email" }}>{children}</CmsShell>;
+  return <SessionShell>{children}</SessionShell>;
 }

@@ -87,8 +87,8 @@ export default function Page() {
         />
       </section>
 
-      <div className="grid items-start gap-4 lg:grid-cols-[1.6fr_1fr]">
-        <div className="space-y-4">
+      <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+        <div className="min-w-0 space-y-4">
           <OverviewPanel
             title="Pending consultation requests"
             href="/consultations?status=PENDING"
@@ -118,7 +118,7 @@ export default function Page() {
           </OverviewPanel>
         </div>
 
-        <div className="space-y-4">
+        <div className="min-w-0 space-y-4">
           <OverviewPanel
             title="Upcoming consultations"
             href="/consultations?status=CONFIRMED"

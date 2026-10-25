@@ -4,13 +4,14 @@ import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import PageHeader from "@/Components/dashboard/Layout/PageHeader";
 import { useSessionUser } from "@/Components/dashboard/Layout/SessionShell";
+import AddUserCard from "@/Components/dashboard/users/AddUserCard";
 import Pagination from "@/Components/dashboard/users/Pagination";
 import UserList from "@/Components/dashboard/users/UserList";
 import UserRow from "@/Components/dashboard/users/UserRow";
 import UserStatusCard from "@/Components/dashboard/users/UserStateCard";
-import { listUsers } from "@/lib/api";
+import { createUser, listUsers } from "@/lib/api";
 import { formatDate } from "@/lib/format";
-import { useApi } from "@/lib/useApi";
+import { useAction, useApi } from "@/lib/useApi";
 
 const LIMIT = 20;
 
@@ -27,7 +28,15 @@ function UsersContent() {
   const page = Math.max(1, Number(searchParams.get("page")) || 1);
   const me = useSessionUser();
 
-  const { data } = useApi(() => listUsers({ page, limit: LIMIT }), String(page));
+  const { data, reload } = useApi(() => listUsers({ page, limit: LIMIT }), String(page));
+  const act = useAction(reload);
+  const addUser = act((form) =>
+    createUser({
+      email: String(form.get("email")),
+      password: String(form.get("password")),
+      name: String(form.get("name") || "") || undefined,
+    }),
+  );
   const totalPages = data?.meta.totalPages ?? 1;
 
   return (
@@ -54,13 +63,17 @@ function UsersContent() {
           <Pagination page={page} totalPages={totalPages} />
         </div>
 
-        {/* The API has no per-user status, so the card shows the signed-in account. */}
-        <UserStatusCard
-          userId={me?.id}
-          userName={me?.name || me?.email || ""}
-          status="active"
-          isSelf
-        />
+        <div className="space-y-4">
+          <AddUserCard action={addUser} />
+
+          {/* The API has no per-user status, so the card shows the signed-in account. */}
+          <UserStatusCard
+            userId={me?.id}
+            userName={me?.name || me?.email || ""}
+            status="active"
+            isSelf
+          />
+        </div>
       </div>
     </div>
   );

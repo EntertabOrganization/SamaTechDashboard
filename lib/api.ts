@@ -92,6 +92,11 @@ export function listUsers(params: ListParams = {}) {
   return request<Paginated<User>>(`/users${query({ ...params })}`);
 }
 
+/** Gives another person dashboard access. The password needs at least 8 characters. */
+export function createUser(input: { email: string; password: string; name?: string }) {
+  return request<User>("/users", { method: "POST", body: JSON.stringify(input) });
+}
+
 /* ---------- Contact messages ---------- */
 
 export type ContactStatus = "NEW" | "READ" | "RESPONDED";

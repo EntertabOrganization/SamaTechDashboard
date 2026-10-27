@@ -58,7 +58,7 @@ export default function SettingsForm() {
           <TextArea name="settings.footer.description" rows={3} placeholder="Short description" />
         </Field>
         <Field label="Copyright text" hint="The year is added automatically.">
-          <TextInput name="settings.footer.copyright" placeholder="Samatechs. All rights reserved." />
+          <TextInput name="settings.footer.copyright" placeholder="SAMATECHS. All rights reserved." />
         </Field>
       </SectionCard>
 

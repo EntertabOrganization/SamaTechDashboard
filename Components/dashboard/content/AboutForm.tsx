@@ -64,7 +64,7 @@ export default function AboutForm() {
         </Field>
       </SectionCard>
 
-      <SectionCard title="Why Samatechs" description="Differentiators with a short text each.">
+      <SectionCard title="Why SAMATECHS" description="Differentiators with a short text each.">
         <HeadingFields prefix="about.differentiators" intro={false} />
         <Repeater
           name="about.differentiators.items"

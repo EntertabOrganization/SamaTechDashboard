@@ -1,16 +1,20 @@
 import Link from "next/link";
 import { ClockIcon } from "@/Components/dashboard/Layout/icons";
 import { HomeIcon, SettingsIcon, UsersIcon } from "@/Components/dashboard/content/icons";
+import { canManage, type UserRole } from "@/lib/api";
 
 // Fixed shortcuts: these are links to pages, not data.
-const actions = [
-  { href: "/content/home", label: "Edit the homepage", icon: <HomeIcon width={16} height={16} /> },
-  { href: "/availability", label: "Update availability", icon: <ClockIcon width={16} height={16} /> },
-  { href: "/users", label: "Invite a user", icon: <UsersIcon width={16} height={16} /> },
-  { href: "/content/settings", label: "Site settings", icon: <SettingsIcon width={16} height={16} /> },
-];
+const allActions = [
+  { href: "/content/home", label: "Edit the homepage", icon: <HomeIcon width={16} height={16} />, area: "users" },
+  { href: "/availability", label: "Update availability", icon: <ClockIcon width={16} height={16} />, area: "booking" },
+  { href: "/users", label: "Invite a user", icon: <UsersIcon width={16} height={16} />, area: "users" },
+  { href: "/content/settings", label: "Site settings", icon: <SettingsIcon width={16} height={16} />, area: "users" },
+] as const;
 
-export default function QuickActions() {
+/** Only the shortcuts the signed-in role can open. */
+export default function QuickActions({ role }: { role?: UserRole }) {
+  const actions = allActions.filter((a) => canManage(role, a.area));
+  if (actions.length === 0) return null;
   return (
     <section className="rounded-3xl border border-ink-100 bg-white shadow-sm">
       <h2 className="px-5 py-4 font-heading text-sm font-bold text-ink-900">Quick actions</h2>

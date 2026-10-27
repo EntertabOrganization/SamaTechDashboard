@@ -32,7 +32,7 @@ export default function ContentPage() {
             href="/content/home"
             icon={<HomeIcon />}
             title="Homepage"
-            description="Hero, pillars intro, who we serve, why Samatechs, track record and FAQ."
+            description="Hero, pillars intro, who we serve, why SAMATECHS, track record and FAQ."
           />
           <ContentAreaCard
             href="/content/services"

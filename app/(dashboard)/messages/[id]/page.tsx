@@ -8,10 +8,12 @@ import { CalendarIcon } from "@/Components/dashboard/Layout/icons";
 import StatusBadge, { type MessageStatus } from "@/Components/dashboard/Message/StatusBadge";
 import ActionButton, { actionButtonClass } from "@/Components/dashboard/shared/ActionButton";
 import ConfirmDialog from "@/Components/dashboard/shared/ConfirmDialog";
+import FormDialog from "@/Components/dashboard/shared/FormDialog";
+import { Field, SelectInput, TextArea, TextInput } from "@/Components/dashboard/shared/fields";
 import InfoTile from "@/Components/dashboard/shared/InfoTile";
 import SettingsCard from "@/Components/dashboard/shared/SettingsCard";
 import { ArrowLeftIcon, CheckIcon, TrashIcon } from "@/Components/dashboard/shared/icons";
-import { deleteContactMessage, getContactMessage, updateContactMessage } from "@/lib/api";
+import { deleteContactMessage, getContactMessage, updateContactMessage, type ContactStatus } from "@/lib/api";
 import { formatDate, timeAgo } from "@/lib/format";
 import { useAction, useApi, useSessionGuard } from "@/lib/useApi";
 
@@ -32,6 +34,20 @@ export default function MessagePage({ params }: { params: Promise<{ id: string }
   if (!message) return null;
 
   const respondedAction = action(() => updateContactMessage(message.id, "RESPONDED"));
+  const editAction = action((formData) => {
+    const text = (field: string) => String(formData.get(field) ?? "");
+    return updateContactMessage(message.id, {
+      name: text("name"),
+      email: text("email"),
+      organization: text("organization"),
+      jobTitle: text("jobTitle"),
+      phone: text("phone"),
+      service: text("service"),
+      program: text("program"),
+      message: text("message"),
+      status: text("status") as ContactStatus,
+    });
+  });
   const deleteAction = async () => {
     try {
       await deleteContactMessage(message.id);
@@ -48,6 +64,7 @@ export default function MessagePage({ params }: { params: Promise<{ id: string }
     ["Job title", message.jobTitle],
     ["Phone", message.phone],
     ["Area of interest", message.service],
+    ["Program", message.program],
   ] as const;
 
   return (
@@ -57,10 +74,49 @@ export default function MessagePage({ params }: { params: Promise<{ id: string }
         title={message.name}
         description={message.email}
         actions={
-          <Link href="/messages" className={actionButtonClass("light")}>
-            <ArrowLeftIcon />
-            All messages
-          </Link>
+          <>
+            <Link href="/messages" className={actionButtonClass("light")}>
+              <ArrowLeftIcon />
+              All messages
+            </Link>
+            <div>
+              <FormDialog triggerLabel="Edit message" title="Edit message" action={editAction}>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <Field label="Name">
+                    <TextInput name="name" required defaultValue={message.name} />
+                  </Field>
+                  <Field label="Email">
+                    <TextInput name="email" type="email" required defaultValue={message.email} />
+                  </Field>
+                  <Field label="Organization">
+                    <TextInput name="organization" defaultValue={message.organization ?? ""} />
+                  </Field>
+                  <Field label="Job title">
+                    <TextInput name="jobTitle" defaultValue={message.jobTitle ?? ""} />
+                  </Field>
+                  <Field label="Phone">
+                    <TextInput name="phone" defaultValue={message.phone ?? ""} />
+                  </Field>
+                  <Field label="Area of interest">
+                    <TextInput name="service" defaultValue={message.service ?? ""} />
+                  </Field>
+                  <Field label="Program">
+                    <TextInput name="program" defaultValue={message.program ?? ""} />
+                  </Field>
+                  <Field label="Status">
+                    <SelectInput name="status" defaultValue={message.status}>
+                      <option value="NEW">New</option>
+                      <option value="READ">Read</option>
+                      <option value="RESPONDED">Responded</option>
+                    </SelectInput>
+                  </Field>
+                </div>
+                <Field label="Message">
+                  <TextArea name="message" required rows={6} defaultValue={message.message} />
+                </Field>
+              </FormDialog>
+            </div>
+          </>
         }
       />
 

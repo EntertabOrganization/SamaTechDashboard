@@ -48,7 +48,7 @@ export function AuthShell({
         </div>
 
         <p className="relative text-xs text-slate-500">
-          © 2026 samatechs
+          © {new Date().getFullYear()} SAMATECHS. All rights reserved.
         </p>
       </aside>
 

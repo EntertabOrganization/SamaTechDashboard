@@ -11,20 +11,27 @@ import {
 import OverviewPanel from "@/Components/dashboard/overview/OverviewPanel";
 import QuickActions from "@/Components/dashboard/overview/QuickActions";
 import StatCard from "@/Components/dashboard/overview/StatCard";
-import { listConsultations, listContactMessages, listUsers } from "@/lib/api";
+import { useSessionUser } from "@/Components/dashboard/Layout/SessionShell";
+import { canManage, listConsultations, listContactMessages, listUsers, type Paginated, type UserRole } from "@/lib/api";
 import { consultationToday, dayAndMonth, formatSlot, timeAgo } from "@/lib/format";
 import { useApi } from "@/lib/useApi";
 
 const ROWS = 3;
 
-async function loadOverview() {
+// Stands in for a list the signed-in role may not read, so nothing is requested for it.
+const none = <T,>(): Promise<Paginated<T>> =>
+  Promise.resolve({ data: [], meta: { total: 0, page: 1, limit: 0, totalPages: 0 } });
+
+async function loadOverview(role: UserRole | undefined) {
+  const booking = canManage(role, "booking");
+  const contact = canManage(role, "contact");
   const [pending, newMessages, latestMessages, confirmed, users] = await Promise.all([
-    listConsultations({ status: "PENDING", limit: ROWS }),
-    listContactMessages({ status: "NEW", limit: 1 }),
-    listContactMessages({ limit: ROWS }),
+    booking ? listConsultations({ status: "PENDING", limit: ROWS }) : none<never>(),
+    contact ? listContactMessages({ status: "NEW", limit: 1 }) : none<never>(),
+    contact ? listContactMessages({ limit: ROWS }) : none<never>(),
     // The API sorts by when the booking was made, so take a wide page and pick the next dates here.
-    listConsultations({ status: "CONFIRMED", limit: 100 }),
-    listUsers({ limit: 1 }),
+    booking ? listConsultations({ status: "CONFIRMED", limit: 100 }) : none<never>(),
+    canManage(role, "users") ? listUsers({ limit: 1 }) : none<never>(),
   ]);
 
   const today = consultationToday();
@@ -45,7 +52,11 @@ async function loadOverview() {
 }
 
 export default function Page() {
-  const { data } = useApi(loadOverview, "overview");
+  const role = useSessionUser()?.role;
+  const { data } = useApi(() => loadOverview(role), `overview:${role}`);
+  const booking = canManage(role, "booking");
+  const contact = canManage(role, "contact");
+  const admin = canManage(role, "users");
 
   return (
     <div className="space-y-6">
@@ -56,37 +67,46 @@ export default function Page() {
       />
 
       <section aria-label="Key numbers" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard
-          highlight
-          href="/consultations?status=PENDING"
-          icon={<CalendarIcon />}
-          label="Pending requests"
-          value={data?.pendingCount ?? "—"}
-          linkLabel="Review requests"
-        />
-        <StatCard
-          href="/messages?status=new"
-          icon={<MailIcon />}
-          label="New messages"
-          value={data?.newMessagesCount ?? "—"}
-          linkLabel="Open inbox"
-        />
-        <StatCard
-          href="/consultations?status=CONFIRMED"
-          icon={<ClockIcon />}
-          label="Confirmed consultations"
-          value={data?.confirmedCount ?? "—"}
-          linkLabel="See schedule"
-        />
-        <StatCard
-          href="/users"
-          icon={<UsersIcon />}
-          label="Active users"
-          value={data?.usersCount ?? "—"}
-          linkLabel="Manage users"
-        />
+        {booking && (
+          <StatCard
+            highlight
+            href="/consultations?status=PENDING"
+            icon={<CalendarIcon />}
+            label="Pending requests"
+            value={data?.pendingCount ?? "—"}
+            linkLabel="Review requests"
+          />
+        )}
+        {contact && (
+          <StatCard
+            href="/messages?status=new"
+            icon={<MailIcon />}
+            label="New messages"
+            value={data?.newMessagesCount ?? "—"}
+            linkLabel="Open inbox"
+          />
+        )}
+        {booking && (
+          <StatCard
+            href="/consultations?status=CONFIRMED"
+            icon={<ClockIcon />}
+            label="Confirmed consultations"
+            value={data?.confirmedCount ?? "—"}
+            linkLabel="See schedule"
+          />
+        )}
+        {admin && (
+          <StatCard
+            href="/users"
+            icon={<UsersIcon />}
+            label="Active users"
+            value={data?.usersCount ?? "—"}
+            linkLabel="Manage users"
+          />
+        )}
       </section>
 
+<<<<<<< Updated upstream
       <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
         <div className="min-w-0 space-y-4">
           <OverviewPanel
@@ -103,21 +123,44 @@ export default function Page() {
               />
             ))}
           </OverviewPanel>
+=======
+      <div className="grid items-start gap-4 lg:grid-cols-[1.6fr_1fr]">
+        <div className="space-y-4">
+          {booking && (
+            <OverviewPanel
+              title="Pending consultation requests"
+              href="/consultations?status=PENDING"
+            >
+              {data?.pending.map((request) => (
+                <PendingRequestItem
+                  key={request.id}
+                  href="/consultations?status=PENDING"
+                  organization={request.company || request.name}
+                  requesterName={request.name}
+                  slot={formatSlot(request.date, request.time)}
+                />
+              ))}
+            </OverviewPanel>
+          )}
+>>>>>>> Stashed changes
 
-          <OverviewPanel title="Latest messages" href="/messages">
-            {data?.latestMessages.map((message) => (
-              <MessageItem
-                key={message.id}
-                href={`/messages/${message.id}`}
-                name={message.name}
-                preview={message.message}
-                receivedAt={timeAgo(message.createdAt)}
-                unread={message.status === "NEW"}
-              />
-            ))}
-          </OverviewPanel>
+          {contact && (
+            <OverviewPanel title="Latest messages" href="/messages">
+              {data?.latestMessages.map((message) => (
+                <MessageItem
+                  key={message.id}
+                  href={`/messages/${message.id}`}
+                  name={message.name}
+                  preview={message.message}
+                  receivedAt={timeAgo(message.createdAt)}
+                  unread={message.status === "NEW"}
+                />
+              ))}
+            </OverviewPanel>
+          )}
         </div>
 
+<<<<<<< Updated upstream
         <div className="min-w-0 space-y-4">
           <OverviewPanel
             title="Upcoming consultations"
@@ -133,8 +176,27 @@ export default function Page() {
               />
             ))}
           </OverviewPanel>
+=======
+        <div className="space-y-4">
+          {booking && (
+            <OverviewPanel
+              title="Upcoming consultations"
+              href="/consultations?status=CONFIRMED"
+            >
+              {data?.upcoming.map((consultation) => (
+                <UpcomingItem
+                  key={consultation.id}
+                  href="/consultations?status=CONFIRMED"
+                  {...dayAndMonth(consultation.date)}
+                  requesterName={consultation.name}
+                  time={consultation.time}
+                />
+              ))}
+            </OverviewPanel>
+          )}
+>>>>>>> Stashed changes
 
-          <QuickActions />
+          <QuickActions role={role} />
         </div>
       </div>
     </div>

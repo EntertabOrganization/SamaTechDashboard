@@ -46,6 +46,21 @@ function ConsultationRequests() {
   const updateStatusAction = action((formData) =>
     updateConsultation(String(formData.get("id")), formData.get("status") as ConsultationStatus),
   );
+  const editAction = action((formData) => {
+    const text = (field: string) => String(formData.get(field) ?? "");
+    return updateConsultation(text("id"), {
+      name: text("name"),
+      email: text("email"),
+      company: text("company"),
+      phone: text("phone"),
+      service: text("service"),
+      notes: text("notes"),
+      date: text("date"),
+      time: text("time"),
+      meetLink: text("meetLink"),
+      status: text("status") as ConsultationStatus,
+    });
+  });
   const deleteAction = action((formData) => deleteConsultation(String(formData.get("id"))));
 
   return (
@@ -53,7 +68,7 @@ function ConsultationRequests() {
       <PageHeader
         eyebrow="Inbox"
         title="Consultation requests"
-        description="Bookings made from the website. Confirm, complete or cancel each one."
+        description="Bookings made from the website. Confirm, complete, cancel, edit or delete each one."
       />
 
       <StatusTabs
@@ -83,7 +98,13 @@ function ConsultationRequests() {
             slot={formatSlot(request.date, request.time)}
             receivedAt={timeAgo(request.createdAt)}
             status={request.status}
+            phone={request.phone ?? undefined}
+            service={request.service ?? undefined}
+            date={request.date.slice(0, 10)}
+            time={request.time}
+            meetLink={request.meetLink}
             updateStatusAction={updateStatusAction}
+            editAction={editAction}
             deleteAction={deleteAction}
           />
         ))}

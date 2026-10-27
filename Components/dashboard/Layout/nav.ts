@@ -10,6 +10,8 @@ export interface CmsNavItem {
   label: string;
   href: string;
   icon: CmsIconKey;
+  /** Hidden unless the signed-in role may manage this area (see `canManage`). */
+  area?: "users" | "contact" | "booking";
 }
 
 export interface CmsNavGroup {
@@ -26,19 +28,19 @@ export const cmsNav: CmsNavGroup[] = [
   {
     label: "Inbox",
     items: [
-      { label: "Consultation requests", href: "/consultations", icon: "consultations" },
-      { label: "Contact messages", href: "/messages", icon: "messages" },
+      { label: "Consultation requests", href: "/consultations", icon: "consultations", area: "booking" },
+      { label: "Contact messages", href: "/messages", icon: "messages", area: "contact" },
     ],
   },
   {
     label: "Website",
-    items: [{ label: "Content", href: "/content", icon: "content" }],
+    items: [{ label: "Content", href: "/content", icon: "content", area: "users" }],
   },
   {
     label: "Settings",
     items: [
-      { label: "Availability", href: "/availability", icon: "availability" },
-      { label: "Users", href: "/users", icon: "users" },
+      { label: "Availability", href: "/availability", icon: "availability", area: "booking" },
+      { label: "Users", href: "/users", icon: "users", area: "users" },
     ],
   },
 ];

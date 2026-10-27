@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { IconButton } from "@/Components/dashboard/ui";
 import { LogOutIcon } from "@/Components/dashboard/Layout/icons";
 import SidebarNav from "@/Components/dashboard/Layout/SidebarNav";
+import { BrandLogo } from "@/Components/dashboard/auth/BrandLogo";
 
 export interface CmsUser {
   name: string;
@@ -10,7 +11,7 @@ export interface CmsUser {
 
 interface SidebarContentProps {
   user: CmsUser;
-  /** Logo. Falls back to a text wordmark. */
+  /** Logo. Falls back to the white SAMATECHS logo. */
   brand?: ReactNode;
   /** Signs out (POST /auth/logout on the backend). */
   logoutAction?: () => void | Promise<void>;
@@ -29,12 +30,7 @@ export default function SidebarContent({ user, brand, logoutAction }: SidebarCon
   return (
     <div className="flex h-full flex-col bg-linear-to-b from-[#0E1823] to-[#1A2736]">
       <div className="flex h-16 shrink-0 items-center gap-2 border-b border-white/10 px-5">
-        {brand ?? (
-          <span className="text-lg font-bold tracking-tight text-white">samatechs</span>
-        )}
-        <span className="rounded-md bg-white/10 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-slate-300">
-          CMS
-        </span>
+        {brand ?? <BrandLogo variant="light" width={124} />}
       </div>
 
       <SidebarNav />

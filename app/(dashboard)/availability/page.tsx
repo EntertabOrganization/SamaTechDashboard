@@ -6,7 +6,14 @@ import BlockedDates from "@/Components/dashboard/availability/BlockedDates";
 import SaveBar from "@/Components/dashboard/availability/SaveBar";
 import SessionSettings from "@/Components/dashboard/availability/SessionSettings";
 import WeekSchedule, { WEEK_DAYS, type DaySchedule } from "@/Components/dashboard/availability/WeekSchedule";
-import { getWeeklyAvailability, updateWeeklyAvailability, type DayAvailability } from "@/lib/api";
+import ConfirmDialog from "@/Components/dashboard/shared/ConfirmDialog";
+import { TrashIcon } from "@/Components/dashboard/shared/icons";
+import {
+  clearWeeklyAvailability,
+  getWeeklyAvailability,
+  updateWeeklyAvailability,
+  type DayAvailability,
+} from "@/lib/api";
 import { useApi, useSessionGuard } from "@/lib/useApi";
 
 /** "09:30" / "2:30 PM" -> minutes since midnight. */
@@ -85,25 +92,50 @@ export default function AvailabilityPage() {
     reload();
   };
 
+  const clearAvailability = async () => {
+    try {
+      await clearWeeklyAvailability();
+    } catch (error) {
+      onError(error);
+      window.alert(error instanceof Error ? error.message : "Something went wrong. Please try again.");
+    }
+    reload();
+  };
+
   return (
-    // `key` remounts the inputs so their default values follow the saved schedule.
-    <form key={JSON.stringify(days)} onSubmit={saveAvailability} className="space-y-6">
+    <div className="space-y-6">
       <PageHeader
         eyebrow="Settings"
         title="Availability"
         description="Choose when visitors can book a consultation on the website."
+        actions={
+          // Outside the schedule form: the dialog has a form of its own.
+          <ConfirmDialog
+            triggerLabel="Clear schedule"
+            triggerIcon={<TrashIcon />}
+            triggerStyle="danger"
+            title="Clear the whole schedule?"
+            description="Every day is closed and visitors can't book a consultation until you save new hours. Existing bookings are kept."
+            confirmLabel="Clear schedule"
+            tone="danger"
+            action={clearAvailability}
+          />
+        }
       />
 
-      <div className="grid items-start gap-4 lg:grid-cols-[1.4fr_1fr]">
-        <WeekSchedule schedule={saved} />
-        <div className="space-y-4">
-          <SessionSettings />
-          {/* The API has no blocked dates yet, so this card is not connected. */}
-          <BlockedDates />
+      {/* `key` remounts the inputs so their default values follow the saved schedule. */}
+      <form key={JSON.stringify(days)} onSubmit={saveAvailability} className="space-y-6">
+        <div className="grid items-start gap-4 lg:grid-cols-[1.4fr_1fr]">
+          <WeekSchedule schedule={saved} />
+          <div className="space-y-4">
+            <SessionSettings />
+            {/* The API has no blocked dates yet, so this card is not connected. */}
+            <BlockedDates />
+          </div>
         </div>
-      </div>
 
-      <SaveBar />
-    </form>
+        <SaveBar />
+      </form>
+    </div>
   );
 }

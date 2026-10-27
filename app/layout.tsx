@@ -1,30 +1,37 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Montserrat, Noto_Sans_Arabic, Quicksand } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+// The same fonts as the SAMATECHS website (SamaTech/app/layout.tsx).
+const arabic = Noto_Sans_Arabic({
+  subsets: ["arabic"],
+  variable: "--font-arabic",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const montserrat = Montserrat({
   subsets: ["latin"],
+  variable: "--font-montserrat",
+  weight: ["600", "700", "800"],
+});
+
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  variable: "--font-quicksand",
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "SamaTechDashboard",
-  description: "SamaTech CMS Dashboard for managing and maintaining website content through a centralized admin interface.",
+  title: "SAMATECHS Dashboard",
+  description: "SAMATECHS CMS dashboard for managing consultations, contact messages, availability and users.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
-      
+    <html lang="en" className="h-full antialiased">
+      <body className={`${montserrat.variable} ${quicksand.variable} ${arabic.variable} min-h-full flex flex-col`}>
+        {children}
+      </body>
     </html>
   );
 }

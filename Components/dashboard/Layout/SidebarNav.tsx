@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/Components/dashboard/ui";
 // import { NavIcon } from "@/Components/dashboard/Layout/icons";
 import { cmsNav } from "@/Components/dashboard/Layout/nav";
+import { useSessionUser } from "@/Components/dashboard/Layout/SessionShell";
+import { canManage } from "@/lib/api";
 
 // "/" is the parent of every other page, so it must match exactly.
 const isActive = (pathname: string, href: string) =>
@@ -12,10 +14,14 @@ const isActive = (pathname: string, href: string) =>
 
 export default function SidebarNav() {
   const pathname = usePathname();
+  const role = useSessionUser()?.role;
+  const groups = cmsNav
+    .map((group) => ({ ...group, items: group.items.filter((item) => !item.area || canManage(role, item.area)) }))
+    .filter((group) => group.items.length > 0);
 
   return (
     <nav aria-label="CMS" className="flex-1 space-y-6 overflow-y-auto px-3 py-6">
-      {cmsNav.map((group) => (
+      {groups.map((group) => (
         <div key={group.label}>
           <p className="px-3 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
             {group.label}

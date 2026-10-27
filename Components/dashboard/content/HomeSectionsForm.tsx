@@ -69,7 +69,7 @@ export default function HomeSectionsForm() {
         />
       </SectionCard>
 
-      <SectionCard title="Why Samatechs" description="The commitments behind every engagement.">
+      <SectionCard title="Why SAMATECHS" description="The commitments behind every engagement.">
         <Toggle name="home.why.visible" label="Show on website" defaultChecked />
         <HeadingFields prefix="home.why" intro={false} />
         <Repeater

@@ -1,5 +1,5 @@
 /**
- * Client for the SamaTechs backend (SamaTechBackend).
+ * Client for the SAMATECHS backend (SamaTechBackend).
  * The backend keeps the session in an httpOnly `token` cookie on its own origin,
  * so every call runs in the browser with `credentials: "include"`.
  * Set NEXT_PUBLIC_API_URL to the backend's origin, e.g. https://api.samatechs.com.
@@ -63,11 +63,25 @@ export interface ListParams {
 
 /* ---------- Auth ---------- */
 
+/** ADMIN manages everything, CONTACT the contact messages, BOOKING the consultations and availability. */
+export type UserRole = "ADMIN" | "CONTACT" | "BOOKING";
+
+export const USER_ROLES: { value: UserRole; label: string; description: string }[] = [
+  { value: "ADMIN", label: "Admin", description: "Everything, including users" },
+  { value: "CONTACT", label: "Contact", description: "Contact messages only" },
+  { value: "BOOKING", label: "Booking", description: "Consultations and availability" },
+];
+
 export interface SessionUser {
   id: string;
   email: string;
   name: string | null;
+  role: UserRole;
 }
+
+/** What each role may open; ADMIN may open everything. */
+export const canManage = (role: UserRole | undefined, area: "users" | "contact" | "booking") =>
+  role === "ADMIN" || (area === "contact" && role === "CONTACT") || (area === "booking" && role === "BOOKING");
 
 export async function login(email: string, password: string): Promise<SessionUser> {
   return (await request<{ user: SessionUser }>("/auth/login", { method: "POST", body: JSON.stringify({ email, password }) })).user;
@@ -93,8 +107,17 @@ export function listUsers(params: ListParams = {}) {
 }
 
 /** Gives another person dashboard access. The password needs at least 8 characters. */
-export function createUser(input: { email: string; password: string; name?: string }) {
+export function createUser(input: { email: string; password: string; name?: string; role: UserRole }) {
   return request<User>("/users", { method: "POST", body: JSON.stringify(input) });
+}
+
+/** Only the fields sent change; leave `password` out to keep it. */
+export function updateUser(id: string, input: { email?: string; password?: string; name?: string; role?: UserRole }) {
+  return request<User>(`/users/${encodeURIComponent(id)}`, { method: "PATCH", body: JSON.stringify(input) });
+}
+
+export function deleteUser(id: string) {
+  return request<{ message: string }>(`/users/${encodeURIComponent(id)}`, { method: "DELETE" });
 }
 
 /* ---------- Contact messages ---------- */
@@ -125,10 +148,13 @@ export function getContactMessage(id: string) {
   return request<ContactMessage>(`/contact/${encodeURIComponent(id)}`);
 }
 
-export function updateContactMessage(id: string, status: ContactStatus) {
+export type ContactMessageInput = Partial<Omit<ContactMessage, "id" | "createdAt" | "updatedAt">>;
+
+/** Pass a status to just move the message, or any fields to edit it. */
+export function updateContactMessage(id: string, change: ContactStatus | ContactMessageInput) {
   return request<ContactMessage>(`/contact/${encodeURIComponent(id)}`, {
     method: "PATCH",
-    body: JSON.stringify({ status }),
+    body: JSON.stringify(typeof change === "string" ? { status: change } : change),
   });
 }
 
@@ -162,10 +188,14 @@ export function listConsultations(params: ListParams & { status?: ConsultationSt
   return request<Paginated<Consultation>>(`/consultations${query({ ...params })}`);
 }
 
-export function updateConsultation(id: string, status: ConsultationStatus) {
+/** Editable fields; `date` is "YYYY-MM-DD". */
+export type ConsultationInput = Partial<Omit<Consultation, "id" | "createdAt" | "updatedAt">>;
+
+/** Pass a status to just move the booking, or any fields to edit it. */
+export function updateConsultation(id: string, change: ConsultationStatus | ConsultationInput) {
   return request<Consultation>(`/consultations/${encodeURIComponent(id)}`, {
     method: "PATCH",
-    body: JSON.stringify({ status }),
+    body: JSON.stringify(typeof change === "string" ? { status: change } : change),
   });
 }
 
@@ -183,6 +213,11 @@ export interface DayAvailability {
 
 export async function getWeeklyAvailability(): Promise<DayAvailability[]> {
   return (await request<{ data: DayAvailability[] }>("/availability")).data;
+}
+
+/** Closes every day for booking. */
+export async function clearWeeklyAvailability(): Promise<DayAvailability[]> {
+  return (await request<{ data: DayAvailability[] }>("/availability", { method: "DELETE" })).data;
 }
 
 /** Replaces the whole week: exactly 7 entries, one per dayOfWeek. */

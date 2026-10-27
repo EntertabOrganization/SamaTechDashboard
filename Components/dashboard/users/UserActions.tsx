@@ -73,7 +73,7 @@ export function DeleteUser({
       disabled={!canDelete || isSelf}
       disabledReason={reason}
       title={`Delete ${userName}?`}
-      description="This permanently removes the account and can't be undone. To keep the account but block access, deactivate it instead."
+      description="This permanently removes the account and they can no longer sign in. It can't be undone."
       confirmLabel="Delete user"
       tone="danger"
       action={action}

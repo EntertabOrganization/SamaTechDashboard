@@ -106,26 +106,8 @@ export default function Page() {
         )}
       </section>
 
-<<<<<<< Updated upstream
       <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
         <div className="min-w-0 space-y-4">
-          <OverviewPanel
-            title="Pending consultation requests"
-            href="/consultations?status=PENDING"
-          >
-            {data?.pending.map((request) => (
-              <PendingRequestItem
-                key={request.id}
-                href="/consultations?status=PENDING"
-                organization={request.company || request.name}
-                requesterName={request.name}
-                slot={formatSlot(request.date, request.time)}
-              />
-            ))}
-          </OverviewPanel>
-=======
-      <div className="grid items-start gap-4 lg:grid-cols-[1.6fr_1fr]">
-        <div className="space-y-4">
           {booking && (
             <OverviewPanel
               title="Pending consultation requests"
@@ -142,7 +124,6 @@ export default function Page() {
               ))}
             </OverviewPanel>
           )}
->>>>>>> Stashed changes
 
           {contact && (
             <OverviewPanel title="Latest messages" href="/messages">
@@ -160,24 +141,7 @@ export default function Page() {
           )}
         </div>
 
-<<<<<<< Updated upstream
         <div className="min-w-0 space-y-4">
-          <OverviewPanel
-            title="Upcoming consultations"
-            href="/consultations?status=CONFIRMED"
-          >
-            {data?.upcoming.map((consultation) => (
-              <UpcomingItem
-                key={consultation.id}
-                href="/consultations?status=CONFIRMED"
-                {...dayAndMonth(consultation.date)}
-                requesterName={consultation.name}
-                time={consultation.time}
-              />
-            ))}
-          </OverviewPanel>
-=======
-        <div className="space-y-4">
           {booking && (
             <OverviewPanel
               title="Upcoming consultations"
@@ -194,7 +158,6 @@ export default function Page() {
               ))}
             </OverviewPanel>
           )}
->>>>>>> Stashed changes
 
           <QuickActions role={role} />
         </div>

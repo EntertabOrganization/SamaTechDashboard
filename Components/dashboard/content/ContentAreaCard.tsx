@@ -22,7 +22,7 @@ export default function ContentAreaCard({
     >
       <span
         aria-hidden="true"
-        className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E3ECF9] text-blue-sovereign"
+        className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-mist text-blue-sovereign"
       >
         {icon}
       </span>

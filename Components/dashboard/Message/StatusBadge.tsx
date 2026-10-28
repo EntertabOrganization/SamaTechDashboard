@@ -13,7 +13,7 @@ export const isMessageStatus = (value: unknown): value is MessageStatus =>
 const styles: Record<MessageStatus, { label: string; box: string; dot?: string }> = {
   new: {
     label: "New",
-    box: "border-[#C9D8EE] bg-[#E3ECF9] text-[#005BC2]",
+    box: "border-blue-haze bg-blue-mist text-blue-sovereign",
     dot: "bg-blue-pulse",
   },
   read: {

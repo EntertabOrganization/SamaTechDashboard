@@ -19,7 +19,7 @@ export interface TagProps {
 }
 
 const focusRing =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0078FF] focus-visible:ring-offset-2";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-pulse focus-visible:ring-offset-2";
 
 export function Tag({
   children,
@@ -38,9 +38,9 @@ export function Tag({
       className={cn(
         "inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors",
         selected
-          ? "border-[#121A23] bg-[#121A23] text-white"
-          : "border-[#DCE4EE] bg-white text-slate-700",
-        onClick && !selected && "hover:border-[#C9D8EE] hover:bg-slate-50",
+          ? "border-ink-900 bg-ink-900 text-white"
+          : "border-ink-100 bg-white text-ink-700",
+        onClick && !selected && "hover:border-blue-haze hover:bg-ink-50",
         className,
       )}
     >
@@ -64,7 +64,7 @@ export function Tag({
           aria-label={translateText(removeLabel ?? (typeof children === "string" ? `Remove ${children}` : "Remove"))}
           className={cn(
             "-me-1 flex h-4 w-4 items-center justify-center rounded-full transition-colors [&_svg]:h-2.5 [&_svg]:w-2.5",
-            selected ? "hover:bg-white/20" : "hover:bg-slate-100",
+            selected ? "hover:bg-white/20" : "hover:bg-ink-50",
             focusRing,
           )}
         >

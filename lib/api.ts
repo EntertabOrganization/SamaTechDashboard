@@ -63,13 +63,13 @@ export interface ListParams {
 
 /* ---------- Auth ---------- */
 
-/** ADMIN manages everything, CONTACT the contact messages, BOOKING the consultations and availability. */
-export type UserRole = "ADMIN" | "CONTACT" | "BOOKING";
+/** ADMIN manages everything, MESSAGES the contact messages, BOOKING the consultations and availability. */
+export type UserRole = "ADMIN" | "MESSAGES" | "BOOKING";
 
 export const USER_ROLES: { value: UserRole; label: string; description: string }[] = [
-  { value: "ADMIN", label: "Admin", description: "Everything, including users" },
-  { value: "CONTACT", label: "Contact", description: "Contact messages only" },
-  { value: "BOOKING", label: "Booking", description: "Consultations and availability" },
+  { value: "ADMIN", label: "Admin", description: "Every module, including users and content" },
+  { value: "MESSAGES", label: "Messages", description: "Contact messages: view, edit, delete" },
+  { value: "BOOKING", label: "Booking", description: "Consultation bookings and availability" },
 ];
 
 export interface SessionUser {
@@ -80,8 +80,8 @@ export interface SessionUser {
 }
 
 /** What each role may open; ADMIN may open everything. */
-export const canManage = (role: UserRole | undefined, area: "users" | "contact" | "booking") =>
-  role === "ADMIN" || (area === "contact" && role === "CONTACT") || (area === "booking" && role === "BOOKING");
+export const canManage = (role: UserRole | undefined, area: "users" | "messages" | "booking") =>
+  role === "ADMIN" || (area === "messages" && role === "MESSAGES") || (area === "booking" && role === "BOOKING");
 
 export async function login(email: string, password: string): Promise<SessionUser> {
   return (await request<{ user: SessionUser }>("/auth/login", { method: "POST", body: JSON.stringify({ email, password }) })).user;

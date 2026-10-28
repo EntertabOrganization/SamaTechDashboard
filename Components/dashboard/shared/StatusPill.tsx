@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 export type PillTone = "info" | "neutral" | "success" | "warning" | "danger";
 
 const tones: Record<PillTone, string> = {
-  info: "border-[#C9D8EE] bg-[#E3ECF9] text-[#005BC2]",
+  info: "border-blue-haze bg-blue-mist text-blue-sovereign",
   neutral: "border-ink-100 bg-white text-ink-500",
   success: "border-[#BFE5CF] bg-[#E6F6EE] text-[#1B7F4B]",
   warning: "border-[#F5D9A6] bg-[#FFF4E0] text-[#A15C00]",

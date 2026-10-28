@@ -40,7 +40,7 @@ export default function UserRow({ id, name, email, role, createdAt, isSelf, edit
       <div className="flex min-w-0 items-center gap-3">
         <span
           aria-hidden="true"
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#E3ECF9] text-xs font-bold text-blue-sovereign"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-mist text-xs font-bold text-blue-sovereign"
         >
           {initials(displayName)}
         </span>

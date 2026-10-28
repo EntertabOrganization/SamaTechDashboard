@@ -52,7 +52,7 @@ export default function MessageRow({
         <div className="flex min-w-0 items-center gap-3">
           <span
             aria-hidden="true"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#E3ECF9] text-xs font-bold text-blue-sovereign"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-mist text-xs font-bold text-blue-sovereign"
           >
             {initials(name)}
           </span>
@@ -70,7 +70,7 @@ export default function MessageRow({
         {/* Message */}
         <div className="min-w-0">
           {area && (
-            <span className="mb-1.5 inline-flex rounded-full border border-ink-100 bg-[#F1F5FB] px-2.5 py-0.5 text-[10px] font-semibold text-ink-500">
+            <span className="mb-1.5 inline-flex rounded-full border border-ink-100 bg-ink-50 px-2.5 py-0.5 text-[10px] font-semibold text-ink-500">
               {area}
             </span>
           )}

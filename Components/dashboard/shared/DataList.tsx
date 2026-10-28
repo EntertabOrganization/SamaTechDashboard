@@ -28,7 +28,7 @@ export default function DataList({
     >
       <div
         aria-hidden="true"
-        className={`hidden gap-4 border-b border-ink-100 bg-[#FAFCFF] px-5 py-3 text-[10px] font-semibold uppercase tracking-wider text-ink-500 md:grid ${gridClass}`}
+        className={`hidden gap-4 border-b border-ink-100 bg-ink-50 px-5 py-3 text-[10px] font-semibold uppercase tracking-wider text-ink-500 md:grid ${gridClass}`}
       >
         {headings.map((h, i) => (
           <span key={i} className={h.className}>

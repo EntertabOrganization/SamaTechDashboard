@@ -6,7 +6,7 @@ import type {
 } from "react";
 
 const control =
-  "w-full rounded-xl border border-ink-100 bg-white text-sm text-ink-900 placeholder:text-ink-300 transition-colors focus:border-blue-pulse focus:outline-none focus:ring-2 focus:ring-blue-pulse/20 disabled:cursor-not-allowed disabled:bg-[#F3F7FC] disabled:text-ink-500";
+  "w-full rounded-xl border border-ink-100 bg-white text-sm text-ink-900 placeholder:text-ink-300 transition-colors focus:border-blue-pulse focus:outline-none focus:ring-2 focus:ring-blue-pulse/20 disabled:cursor-not-allowed disabled:bg-ink-50 disabled:text-ink-500";
 
 /** Label + control + optional hint. The control sits inside the <label>, so no ids are needed. */
 export function Field({
@@ -83,7 +83,7 @@ export function Toggle({
       />
       <label
         htmlFor={id}
-        className="relative h-6 w-11 shrink-0 cursor-pointer rounded-full bg-[#C9D8EE] transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow-sm after:transition-transform peer-checked:bg-blue-pulse peer-checked:after:translate-x-5 peer-focus-visible:ring-2 peer-focus-visible:ring-blue-pulse peer-focus-visible:ring-offset-2"
+        className="relative h-6 w-11 shrink-0 cursor-pointer rounded-full bg-blue-haze transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow-sm after:transition-transform peer-checked:bg-blue-pulse peer-checked:after:translate-x-5 peer-focus-visible:ring-2 peer-focus-visible:ring-blue-pulse peer-focus-visible:ring-offset-2"
       >
         <span className="sr-only">{label}</span>
       </label>
@@ -112,7 +112,7 @@ export function ImageField({
     <div>
       <p className="mb-1.5 text-[11px] font-semibold text-ink-900">{label}</p>
       <div className="flex items-center gap-4">
-        <div className="flex h-20 w-32 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-dashed border-[#C9D8EE] bg-[#F3F7FC] text-ink-300">
+        <div className="flex h-20 w-32 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-dashed border-blue-haze bg-ink-50 text-ink-300">
           {currentSrc ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={currentSrc} alt="" className="h-full w-full object-cover" />
@@ -134,7 +134,7 @@ export function ImageField({
           )}
         </div>
         <div>
-          <label className="inline-flex cursor-pointer items-center rounded-full bg-[#EEF3FA] px-4 py-2.5 text-xs font-semibold text-ink-900 transition-colors hover:bg-[#E3ECF9] has-focus-visible:ring-2 has-focus-visible:ring-blue-pulse has-focus-visible:ring-offset-2">
+          <label className="inline-flex cursor-pointer items-center rounded-full bg-ink-50 px-4 py-2.5 text-xs font-semibold text-ink-900 transition-colors hover:bg-blue-mist has-focus-visible:ring-2 has-focus-visible:ring-blue-pulse has-focus-visible:ring-offset-2">
             {currentSrc ? "Replace image" : "Upload image"}
             <input type="file" name={name} accept="image/*" className="sr-only" />
           </label>

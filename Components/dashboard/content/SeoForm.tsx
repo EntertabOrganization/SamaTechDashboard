@@ -16,7 +16,7 @@ const seoPages = [
 /** Static layout of how the page shows up in search results. A live preview needs JS later. */
 function SearchPreview({ path }: { path: string }) {
   return (
-    <div className="rounded-2xl border border-ink-100 bg-[#FAFCFF] p-4">
+    <div className="rounded-2xl border border-ink-100 bg-ink-50 p-4">
       <p className="text-[10px] font-semibold uppercase tracking-wider text-ink-500">
         Search preview
       </p>

@@ -11,7 +11,7 @@ interface InfoTileProps {
 export default function InfoTile({ icon, label, value, className }: InfoTileProps) {
   return (
     <div
-      className={`flex items-center gap-3 rounded-xl bg-[#EEF3FA] px-3 py-2.5 ${className ?? ""}`}
+      className={`flex items-center gap-3 rounded-xl bg-ink-50 px-3 py-2.5 ${className ?? ""}`}
     >
       <span
         aria-hidden="true"

@@ -47,7 +47,7 @@ export default function Page() {
     >
       <AuthHeading
         title="Sign in"
-        description="Use your admin account to open the dashboard."
+        description="Use your SAMATECHS dashboard account. You'll see the modules your role allows."
       />
 
       <AuthForm onSubmit={handleSubmit}>
@@ -61,11 +61,11 @@ export default function Page() {
           required
         />
 
-        <label className="flex cursor-pointer items-center gap-2.5 text-sm text-slate-600">
+        <label className="flex cursor-pointer items-center gap-2.5 text-sm text-ink-500">
           <input
             type="checkbox"
             name="remember"
-            className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-500/30"
+            className="h-4 w-4 rounded border-ink-200 text-blue-pulse focus:ring-2 focus:ring-blue-pulse/30"
           />
           Keep me signed in
         </label>

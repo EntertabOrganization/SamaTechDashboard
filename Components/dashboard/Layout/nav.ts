@@ -11,7 +11,7 @@ export interface CmsNavItem {
   href: string;
   icon: CmsIconKey;
   /** Hidden unless the signed-in role may manage this area (see `canManage`). */
-  area?: "users" | "contact" | "booking";
+  area?: "users" | "messages" | "booking";
 }
 
 export interface CmsNavGroup {
@@ -29,7 +29,7 @@ export const cmsNav: CmsNavGroup[] = [
     label: "Inbox",
     items: [
       { label: "Consultation requests", href: "/consultations", icon: "consultations", area: "booking" },
-      { label: "Contact messages", href: "/messages", icon: "messages", area: "contact" },
+      { label: "Contact messages", href: "/messages", icon: "messages", area: "messages" },
     ],
   },
   {

@@ -7,6 +7,8 @@ import { BrandLogo } from "@/Components/dashboard/auth/BrandLogo";
 export interface CmsUser {
   name: string;
   email: string;
+  /** The role's label, e.g. "Booking". */
+  role?: string;
 }
 
 interface SidebarContentProps {
@@ -28,7 +30,7 @@ const initials = (name: string) =>
 /** Same navy gradient as the website footer. Used in the desktop sidebar and the mobile drawer. */
 export default function SidebarContent({ user, brand, logoutAction }: SidebarContentProps) {
   return (
-    <div className="flex h-full flex-col bg-linear-to-b from-[#0E1823] to-[#1A2736]">
+    <div className="flex h-full flex-col bg-gradient-navy">
       <div className="flex h-16 shrink-0 items-center gap-2 border-b border-white/10 px-5">
         {brand ?? <BrandLogo variant="light" width={124} />}
       </div>
@@ -45,7 +47,10 @@ export default function SidebarContent({ user, brand, logoutAction }: SidebarCon
           </span>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-white">{user.name}</p>
-            <p className="truncate text-[11px] text-slate-400">{user.email}</p>
+            <p className="truncate text-[11px] text-ink-300">
+              {user.role && <span className="font-semibold text-blue-precision">{user.role} · </span>}
+              {user.email}
+            </p>
           </div>
           <form action={logoutAction}>
             <IconButton

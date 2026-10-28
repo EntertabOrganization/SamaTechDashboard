@@ -29,7 +29,7 @@ export interface TabsProps {
 }
 
 const focusRing =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0078FF] focus-visible:ring-offset-2";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-pulse focus-visible:ring-offset-2";
 
 export function Tabs({
   items,
@@ -115,12 +115,12 @@ export function Tabs({
                       fullWidth && "flex-1",
                       selected
                         ? "bg-ink-900 text-white"
-                        : "text-ink-500 hover:text-[#0F1B2D]",
+                        : "text-ink-500 hover:text-ink-900",
                     )
                   : cn(
                       "-mb-px whitespace-nowrap border-b-2 pb-2.5 pt-1",
                       selected
-                        ? "border-blue-pulse text-[#0F1B2D]"
+                        ? "border-blue-pulse text-ink-900"
                         : "border-transparent text-ink-500 hover:text-ink-900",
                     ),
               )}

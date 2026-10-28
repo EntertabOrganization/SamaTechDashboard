@@ -99,7 +99,7 @@ export function UpcomingItem({
       <Link href={href} className={row}>
         <span
           aria-hidden="true"
-          className="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-xl bg-[#EEF3FA] leading-none"
+          className="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-xl bg-ink-50 leading-none"
         >
           <span className="font-heading text-base font-bold text-ink-900">{day}</span>
           <span className="mt-0.5 text-[9px] font-semibold uppercase tracking-wider text-ink-500">

@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { ClockIcon } from "@/Components/dashboard/Layout/icons";
+import { ClockIcon, MailIcon } from "@/Components/dashboard/Layout/icons";
 import { HomeIcon, SettingsIcon, UsersIcon } from "@/Components/dashboard/content/icons";
 import { canManage, type UserRole } from "@/lib/api";
 
 // Fixed shortcuts: these are links to pages, not data.
 const allActions = [
   { href: "/content/home", label: "Edit the homepage", icon: <HomeIcon width={16} height={16} />, area: "users" },
+  { href: "/messages?status=new", label: "Answer new messages", icon: <MailIcon width={16} height={16} />, area: "messages" },
   { href: "/availability", label: "Update availability", icon: <ClockIcon width={16} height={16} />, area: "booking" },
   { href: "/users", label: "Invite a user", icon: <UsersIcon width={16} height={16} />, area: "users" },
   { href: "/content/settings", label: "Site settings", icon: <SettingsIcon width={16} height={16} />, area: "users" },
@@ -27,7 +28,7 @@ export default function QuickActions({ role }: { role?: UserRole }) {
             >
               <span
                 aria-hidden="true"
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#E3ECF9] text-blue-sovereign"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-mist text-blue-sovereign"
               >
                 {a.icon}
               </span>

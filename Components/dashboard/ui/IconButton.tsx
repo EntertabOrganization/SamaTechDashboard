@@ -25,14 +25,14 @@ const base =
 
 const variants: Record<IconButtonVariant, string> = {
   solid:
-    "border-transparent bg-[#0078FF] text-white hover:bg-[#005BC2] focus-visible:ring-[#0078FF]",
+    "border-transparent bg-blue-pulse text-white hover:bg-blue-sovereign focus-visible:ring-blue-pulse",
   outline:
-    "border-[#DCE4EE] bg-white text-[#0F1B2D] hover:border-[#C9D8EE] hover:bg-slate-50 focus-visible:ring-[#0078FF]",
+    "border-ink-100 bg-white text-ink-900 hover:border-blue-haze hover:bg-ink-50 focus-visible:ring-blue-pulse",
   ghost:
-    "border-transparent bg-transparent text-slate-500 hover:bg-slate-100 hover:text-[#0F1B2D] focus-visible:ring-[#0078FF]",
+    "border-transparent bg-transparent text-ink-500 hover:bg-ink-50 hover:text-ink-900 focus-visible:ring-blue-pulse",
   // For dark surfaces
   inverse:
-    "border-white/20 bg-white/10 text-white hover:bg-white/20 focus-visible:ring-white/70 focus-visible:ring-offset-[#121A23]",
+    "border-white/20 bg-white/10 text-white hover:bg-white/20 focus-visible:ring-white/70 focus-visible:ring-offset-ink-900",
 };
 
 const sizes: Record<IconButtonSize, string> = {

@@ -9,7 +9,7 @@ const iconBase =
   "flex h-8 w-8 items-center justify-center rounded-full text-ink-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-pulse disabled:cursor-not-allowed disabled:opacity-40";
 
 const triggerClasses: Record<TriggerStyle, string> = {
-  icon: `${iconBase} hover:bg-[#EEF3FA] hover:text-ink-900`,
+  icon: `${iconBase} hover:bg-ink-50 hover:text-ink-900`,
   "icon-danger": `${iconBase} hover:bg-[#FDECEC] hover:text-[#B42318]`,
   light: `${actionButtonClass("light")}`,
   ghost: `${actionButtonClass("ghost")}`,
@@ -85,7 +85,7 @@ export default function ConfirmDialog({
           // The form fills the dialog, so a click on the <dialog> itself is a click on the backdrop.
           if (event.target === ref.current) ref.current?.close();
         }}
-        className="m-auto w-[calc(100%-2rem)] max-w-md rounded-3xl border-0 bg-white p-0 text-left shadow-[0px_30px_80px_-20px_#0E182366] backdrop:bg-[#0E1823]/60 backdrop:backdrop-blur-[6px]"
+        className="m-auto w-[calc(100%-2rem)] max-w-md rounded-3xl border-0 bg-white p-0 text-left shadow-[0px_30px_80px_-20px_#121A2366] backdrop:bg-ink-900/60 backdrop:backdrop-blur-[6px]"
       >
         <form action={action} onSubmit={() => ref.current?.close()} className="p-6">
           {children}

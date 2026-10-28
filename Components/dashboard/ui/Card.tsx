@@ -48,7 +48,7 @@ const surfaces: Record<CardSurface, SurfaceStyle> = {
   ink: {
     box: "border-white/10 bg-gradient-navy",
     iconTile: "border-white/15 bg-white/10 text-white",
-    kicker: "text-slate-400",
+    kicker: "text-ink-300",
     title: "text-white",
     body: "text-[#FFFFFFB8]",
   },
@@ -78,7 +78,7 @@ export function Card({
     "flex flex-col rounded-2xl border p-5 text-start",
     s.box,
     href &&
-      "transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0078FF] focus-visible:ring-offset-2",
+      "transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-pulse focus-visible:ring-offset-2",
     className,
   );
 

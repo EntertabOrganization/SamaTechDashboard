@@ -24,11 +24,11 @@ const none = <T,>(): Promise<Paginated<T>> =>
 
 async function loadOverview(role: UserRole | undefined) {
   const booking = canManage(role, "booking");
-  const contact = canManage(role, "contact");
+  const messages = canManage(role, "messages");
   const [pending, newMessages, latestMessages, confirmed, users] = await Promise.all([
     booking ? listConsultations({ status: "PENDING", limit: ROWS }) : none<never>(),
-    contact ? listContactMessages({ status: "NEW", limit: 1 }) : none<never>(),
-    contact ? listContactMessages({ limit: ROWS }) : none<never>(),
+    messages ? listContactMessages({ status: "NEW", limit: 1 }) : none<never>(),
+    messages ? listContactMessages({ limit: ROWS }) : none<never>(),
     // The API sorts by when the booking was made, so take a wide page and pick the next dates here.
     booking ? listConsultations({ status: "CONFIRMED", limit: 100 }) : none<never>(),
     canManage(role, "users") ? listUsers({ limit: 1 }) : none<never>(),
@@ -55,7 +55,7 @@ export default function Page() {
   const role = useSessionUser()?.role;
   const { data } = useApi(() => loadOverview(role), `overview:${role}`);
   const booking = canManage(role, "booking");
-  const contact = canManage(role, "contact");
+  const messages = canManage(role, "messages");
   const admin = canManage(role, "users");
 
   return (
@@ -77,7 +77,7 @@ export default function Page() {
             linkLabel="Review requests"
           />
         )}
-        {contact && (
+        {messages && (
           <StatCard
             href="/messages?status=new"
             icon={<MailIcon />}
@@ -125,7 +125,7 @@ export default function Page() {
             </OverviewPanel>
           )}
 
-          {contact && (
+          {messages && (
             <OverviewPanel title="Latest messages" href="/messages">
               {data?.latestMessages.map((message) => (
                 <MessageItem

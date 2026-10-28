@@ -11,7 +11,7 @@ export default function MessageList({ children }: { children: ReactNode }) {
     >
       <div
         aria-hidden="true"
-        className={`hidden gap-4 border-b border-ink-100 bg-[#FAFCFF] px-5 py-3 text-[10px] font-semibold uppercase tracking-wider text-ink-500 md:grid ${messageGrid}`}
+        className={`hidden gap-4 border-b border-ink-100 bg-ink-50 px-5 py-3 text-[10px] font-semibold uppercase tracking-wider text-ink-500 md:grid ${messageGrid}`}
       >
         <span>Sender</span>
         <span>Message</span>

@@ -46,7 +46,7 @@ export default function StatusTabs({
                 {tab.count !== undefined && (
                   <span
                     className={`min-w-5 rounded-full px-1.5 py-0.5 text-center text-[10px] font-bold ${
-                      selected ? "bg-white/15 text-white" : "bg-[#EEF3FA] text-ink-500"
+                      selected ? "bg-white/15 text-white" : "bg-ink-50 text-ink-500"
                     }`}
                   >
                     {tab.count}

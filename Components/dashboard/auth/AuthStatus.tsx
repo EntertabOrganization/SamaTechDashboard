@@ -4,8 +4,8 @@ import type { LucideIcon } from "lucide-react";
 type Tone = "info" | "success";
 
 const tones: Record<Tone, string> = {
-  info: "bg-blue-50 text-blue-600",
-  success: "bg-emerald-50 text-emerald-600",
+  info: "bg-blue-mist text-blue-pulse",
+  success: "bg-success/10 text-success",
 };
 
 type AuthStatusProps = {
@@ -31,10 +31,10 @@ export function AuthStatus({
       >
         <Icon className="h-6 w-6" />
       </div>
-      <h1 className="mt-5 text-2xl font-semibold tracking-tight text-[#0e1824]">
+      <h1 className="mt-5 text-2xl font-semibold tracking-tight text-ink-900">
         {title}
       </h1>
-      <p className="mt-1.5 text-sm leading-relaxed text-slate-500">
+      <p className="mt-1.5 text-sm leading-relaxed text-ink-500">
         {description}
       </p>
       {children && <div className="mt-8">{children}</div>}

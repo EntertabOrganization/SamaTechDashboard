@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { canManage, getCurrentUser, logout, type SessionUser } from "@/lib/api";
+import { USER_ROLES, canManage, getCurrentUser, logout, type SessionUser } from "@/lib/api";
 import { actionButtonClass } from "@/Components/dashboard/shared/ActionButton";
 import CmsShell from "./CmsShell";
 import { cmsNav } from "./nav";
@@ -13,7 +13,7 @@ const SessionContext = createContext<SessionUser | null>(null);
 /** The signed-in user, inside the dashboard pages. */
 export const useSessionUser = () => useContext(SessionContext);
 
-/** The area a dashboard path belongs to, from the nav ("/messages/123" -> "contact"). */
+/** The area a dashboard path belongs to, from the nav ("/messages/123" -> "messages"). */
 const areaFor = (pathname: string) =>
   cmsNav
     .flatMap((group) => group.items)
@@ -63,7 +63,14 @@ export default function SessionShell({ children }: { children: ReactNode }) {
 
   return (
     <SessionContext.Provider value={user}>
-      <CmsShell user={{ name: user.name || user.email, email: user.email }} logoutAction={logoutAction}>
+      <CmsShell
+        user={{
+          name: user.name || user.email,
+          email: user.email,
+          role: USER_ROLES.find((r) => r.value === user.role)?.label,
+        }}
+        logoutAction={logoutAction}
+      >
         {allowed ? children : <NoAccess />}
       </CmsShell>
     </SessionContext.Provider>

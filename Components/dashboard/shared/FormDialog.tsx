@@ -5,7 +5,7 @@ import { actionButtonClass } from "./ActionButton";
 import { EditIcon } from "./icons";
 
 const iconTrigger =
-  "flex h-8 w-8 items-center justify-center rounded-full text-ink-500 transition-colors hover:bg-[#EEF3FA] hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-pulse disabled:cursor-not-allowed disabled:opacity-40";
+  "flex h-8 w-8 items-center justify-center rounded-full text-ink-500 transition-colors hover:bg-ink-50 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-pulse disabled:cursor-not-allowed disabled:opacity-40";
 
 interface FormDialogProps {
   /** Button text. For the icon style it becomes the accessible name. */
@@ -61,7 +61,7 @@ export default function FormDialog({
         onClick={(event) => {
           if (event.target === ref.current) ref.current?.close();
         }}
-        className="m-auto max-h-[90vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-3xl border-0 bg-white p-0 text-left shadow-[0px_30px_80px_-20px_#0E182366] backdrop:bg-[#0E1823]/60 backdrop:backdrop-blur-[6px]"
+        className="m-auto max-h-[90vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-3xl border-0 bg-white p-0 text-left shadow-[0px_30px_80px_-20px_#121A2366] backdrop:bg-ink-900/60 backdrop:backdrop-blur-[6px]"
       >
         <form ref={formRef} action={action} onSubmit={() => ref.current?.close()} className="p-6">
           <h2 id={`${uid}-title`} className="font-heading text-lg font-bold text-ink-900">

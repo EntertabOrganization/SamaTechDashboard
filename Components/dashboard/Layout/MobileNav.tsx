@@ -58,7 +58,7 @@ export default function MobileNav({ children }: { children: ReactNode }) {
     aria-label="Close menu"
     onClick={() => setOpen(false)}
     className={cn(
-      "absolute inset-0 h-full w-full bg-[#0E1823]/60 backdrop-blur-[6px] transition-opacity duration-200",
+      "absolute inset-0 h-full w-full bg-ink-900/60 backdrop-blur-[6px] transition-opacity duration-200",
       isOpen ? "opacity-100" : "opacity-0",
     )}
   />
@@ -67,7 +67,7 @@ export default function MobileNav({ children }: { children: ReactNode }) {
   <div
     id="cms-drawer"
     className={cn(
-      "fixed inset-y-0 left-0 z-10 h-dvh w-72 max-w-[85vw] overflow-y-auto bg-white shadow-[0px_30px_80px_-20px_#0E182366] transition-transform duration-200",
+      "fixed inset-y-0 left-0 z-10 h-dvh w-72 max-w-[85vw] overflow-y-auto bg-white shadow-[0px_30px_80px_-20px_#121A2366] transition-transform duration-200",
       isOpen ? "translate-x-0" : "-translate-x-full",
     )}
   >

@@ -18,7 +18,7 @@ export function BlockedDateChip({
         <button
           type="button"
           aria-label={`Remove ${label}`}
-          className="flex h-5 w-5 items-center justify-center rounded-full text-ink-500 transition-colors hover:bg-[#EEF3FA] hover:text-ink-900"
+          className="flex h-5 w-5 items-center justify-center rounded-full text-ink-500 transition-colors hover:bg-ink-50 hover:text-ink-900"
         >
           <CloseIcon width={10} height={10} />
         </button>
@@ -51,7 +51,7 @@ export default function BlockedDates({ children }: { children?: ReactNode }) {
         {children ? (
           <ul className="flex flex-wrap gap-2">{children}</ul>
         ) : (
-          <p className="rounded-xl bg-[#EEF3FA] px-3 py-3 text-center text-xs text-ink-500">
+          <p className="rounded-xl bg-ink-50 px-3 py-3 text-center text-xs text-ink-500">
             No blocked dates.
           </p>
         )}

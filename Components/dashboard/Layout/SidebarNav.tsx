@@ -23,7 +23,7 @@ export default function SidebarNav() {
     <nav aria-label="CMS" className="flex-1 space-y-6 overflow-y-auto px-3 py-6">
       {groups.map((group) => (
         <div key={group.label}>
-          <p className="px-3 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+          <p className="px-3 text-[10px] font-semibold uppercase tracking-wider text-ink-500">
             {group.label}
           </p>
           <ul className="mt-2 space-y-1">
@@ -38,7 +38,7 @@ export default function SidebarNav() {
                       "relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
                       active
                         ? "bg-white/10 text-white"
-                        : "text-slate-300 hover:bg-white/5 hover:text-white",
+                        : "text-ink-200 hover:bg-white/5 hover:text-white",
                     )}
                   >
                     {active && (

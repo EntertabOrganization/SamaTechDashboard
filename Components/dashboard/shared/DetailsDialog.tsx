@@ -41,7 +41,7 @@ export default function DetailsDialog({
         onClick={(event) => {
           if (event.target === ref.current) ref.current?.close();
         }}
-        className="m-auto max-h-[85vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-3xl border-0 bg-white p-0 text-left shadow-[0px_30px_80px_-20px_#0E182366] backdrop:bg-[#0E1823]/60 backdrop:backdrop-blur-[6px]"
+        className="m-auto max-h-[85vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-3xl border-0 bg-white p-0 text-left shadow-[0px_30px_80px_-20px_#121A2366] backdrop:bg-ink-900/60 backdrop:backdrop-blur-[6px]"
       >
         <div className="p-6">
           <h2 id={`${uid}-title`} className="font-heading text-lg font-bold text-ink-900">

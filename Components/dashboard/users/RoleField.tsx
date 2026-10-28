@@ -2,7 +2,7 @@ import { Field, SelectInput } from "@/Components/dashboard/shared/fields";
 import StatusPill, { type PillTone } from "@/Components/dashboard/shared/StatusPill";
 import { USER_ROLES, type UserRole } from "@/lib/api";
 
-const tones: Record<UserRole, PillTone> = { ADMIN: "info", CONTACT: "success", BOOKING: "warning" };
+const tones: Record<UserRole, PillTone> = { ADMIN: "info", MESSAGES: "success", BOOKING: "warning" };
 
 export function RolePill({ role }: { role: UserRole }) {
   return <StatusPill tone={tones[role]}>{USER_ROLES.find((r) => r.value === role)?.label ?? role}</StatusPill>;

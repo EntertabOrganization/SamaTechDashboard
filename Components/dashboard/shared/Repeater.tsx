@@ -58,7 +58,7 @@ export default function Repeater({
 
       <ol className="space-y-3">
         {rows.map((id, index) => (
-          <li key={id} className="rounded-2xl border border-ink-100 bg-[#FAFCFF] p-3">
+          <li key={id} className="rounded-2xl border border-ink-100 bg-ink-50 p-3">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-500">
                 {itemLabel} {index + 1}
@@ -67,7 +67,7 @@ export default function Repeater({
                 type="button"
                 onClick={() => remove(id)}
                 aria-label={`Remove ${itemLabel} ${index + 1}`}
-                className="flex h-6 w-6 items-center justify-center rounded-full text-ink-500 transition-colors hover:bg-[#EEF3FA] hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-pulse"
+                className="flex h-6 w-6 items-center justify-center rounded-full text-ink-500 transition-colors hover:bg-ink-50 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-pulse"
               >
                 <svg
                   aria-hidden="true"

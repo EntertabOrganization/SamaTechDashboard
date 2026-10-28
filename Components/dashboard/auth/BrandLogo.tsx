@@ -18,7 +18,7 @@ export function BrandLogo({ variant = "light", width = 150 }: BrandLogoProps) {
       <Image src={isLight ? LogoWhite : LogoDark} alt="SAMATECHS" width={width} priority />
       <span
         className={`rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${
-          isLight ? "bg-white/10 text-slate-200" : "bg-blue-mist text-blue-sovereign"
+          isLight ? "bg-white/10 text-ink-100" : "bg-blue-mist text-blue-sovereign"
         }`}
       >
         CMS

@@ -7,9 +7,9 @@ const base =
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-[#0e1824] text-white hover:bg-[#1a2536] focus-visible:ring-4 focus-visible:ring-blue-500/30 active:scale-[0.99]",
+    "bg-ink-900 text-white hover:bg-ink-700 focus-visible:ring-4 focus-visible:ring-blue-pulse/30 active:scale-[0.99]",
   secondary:
-    "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 focus-visible:ring-4 focus-visible:ring-blue-500/20",
+    "border border-ink-100 bg-white text-ink-700 hover:bg-ink-50 focus-visible:ring-4 focus-visible:ring-blue-pulse/20",
 };
 
 /** Use this on a <Link> when you need a link that looks like a button. */

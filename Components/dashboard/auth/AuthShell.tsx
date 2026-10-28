@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
+import BrandRays from "@/public/images/footer-vector.png";
 import { BrandLogo } from "./BrandLogo";
 
 type AuthShellProps = {
@@ -18,36 +20,33 @@ export function AuthShell({
   return (
     <main className="grid min-h-screen bg-ink-50 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
       {/* Brand panel */}
-      <aside className="relative hidden flex-col justify-between overflow-hidden bg-linear-to-b from-[#0e1824] to-[#1a2536] p-12 text-white lg:flex">
-        {/* Subtle grid texture */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-            maskImage:
-              "radial-gradient(ellipse at 20% 100%, black 0%, transparent 70%)",
-            WebkitMaskImage:
-              "radial-gradient(ellipse at 20% 100%, black 0%, transparent 70%)",
-          }}
+      <aside className="relative hidden flex-col justify-between overflow-hidden bg-gradient-navy p-12 text-white lg:flex">
+        {/* Faint brand rays, bottom-left — the same artwork as the website footer */}
+        <Image
+          src={BrandRays}
+          alt=""
+          aria-hidden="true"
+          sizes="440px"
+          className="pointer-events-none absolute -bottom-35 -left-30 h-[431.02px] w-110 max-w-none opacity-5"
         />
 
         <div className="relative">
-          <BrandLogo variant="light" />
+          <BrandLogo variant="light" width={201} />
         </div>
 
         <div className="relative max-w-md">
-          <h2 className="text-4xl font-semibold leading-tight tracking-tight">
+          <p className="font-body text-eyebrow font-bold uppercase tracking-eyebrow text-blue-precision">
+            Strategic advisory &amp; analytics
+          </p>
+          <h2 className="mt-4 text-h2 font-bold leading-h2 tracking-tight">
             {brandTitle}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-slate-400">
+          <p className="mt-4 text-body leading-body text-white/72">
             {brandDescription}
           </p>
         </div>
 
-        <p className="relative text-xs text-slate-500">
+        <p className="relative text-xs text-white/50">
           © {new Date().getFullYear()} SAMATECHS. All rights reserved.
         </p>
       </aside>
@@ -60,7 +59,7 @@ export function AuthShell({
             <BrandLogo variant="dark" />
           </div>
 
-          <div className="rounded-2xl border border-slate-200/70 bg-white p-8 shadow-[0_1px_2px_rgba(15,26,39,0.04),0_12px_32px_-12px_rgba(15,26,39,0.12)] sm:p-9">
+          <div className="rounded-card border border-ink-100 bg-white p-8 shadow-md sm:p-9">
             {children}
           </div>
 

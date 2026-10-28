@@ -8,7 +8,7 @@ type ButtonProps = React.ComponentProps<"button"> & {
 
 const variants = {
   primary:
-    "bg-blue-500 text-white hover:bg-blue-700",
+    "bg-blue-pulse text-white hover:bg-blue-sovereign",
 
   secondary:
     "bg-ink-900 text-white",

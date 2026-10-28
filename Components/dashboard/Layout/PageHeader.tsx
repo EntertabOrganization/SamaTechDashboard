@@ -19,7 +19,7 @@ export default function PageHeader({
     <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div>
         {eyebrow && (
-          <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-wider text-blue-sovereign">
+          <p className="flex items-center gap-3 font-body text-eyebrow font-bold uppercase tracking-eyebrow text-blue-sovereign">
             <span aria-hidden="true" className="h-px w-8 bg-blue-sovereign" />
             {eyebrow}
           </p>

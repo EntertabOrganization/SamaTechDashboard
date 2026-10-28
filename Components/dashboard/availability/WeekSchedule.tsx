@@ -44,7 +44,7 @@ export default function WeekSchedule({ schedule }: { schedule?: Partial<Record<s
             />
             <label
               htmlFor={`${day.key}-enabled`}
-              className="relative h-6 w-11 shrink-0 cursor-pointer rounded-full bg-[#C9D8EE] transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow-sm after:transition-transform peer-checked:bg-blue-pulse peer-checked:after:translate-x-5 peer-focus-visible:ring-2 peer-focus-visible:ring-blue-pulse peer-focus-visible:ring-offset-2"
+              className="relative h-6 w-11 shrink-0 cursor-pointer rounded-full bg-blue-haze transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow-sm after:transition-transform peer-checked:bg-blue-pulse peer-checked:after:translate-x-5 peer-focus-visible:ring-2 peer-focus-visible:ring-blue-pulse peer-focus-visible:ring-offset-2"
             >
               <span className="sr-only">Available on {day.label}</span>
             </label>

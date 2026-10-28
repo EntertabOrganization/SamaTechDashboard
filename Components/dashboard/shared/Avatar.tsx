@@ -4,7 +4,7 @@ const sizes = {
 };
 
 const tones = {
-  brand: "bg-[#E3ECF9] text-blue-sovereign",
+  brand: "bg-blue-mist text-blue-sovereign",
   muted: "bg-ink-100 text-ink-500",
 };
 

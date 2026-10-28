@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import Image from "next/image";
 import BrandRays from "@/public/images/footer-vector.png";
 import { BrandLogo } from "./BrandLogo";
@@ -10,6 +10,10 @@ type AuthShellProps = {
   children: ReactNode;
   footer?: ReactNode;
 };
+
+function CurrentYear() {
+  return new Date().getFullYear();
+}
 
 export function AuthShell({
   brandTitle,
@@ -47,7 +51,7 @@ export function AuthShell({
         </div>
 
         <p className="relative text-xs text-white/50">
-          © {new Date().getFullYear()} SAMATECHS. All rights reserved.
+          © <Suspense fallback={null}><CurrentYear /></Suspense> SAMATECHS. All rights reserved.
         </p>
       </aside>
 

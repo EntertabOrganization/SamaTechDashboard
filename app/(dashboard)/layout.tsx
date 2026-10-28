@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import SessionShell from "@/Components/dashboard/Layout/SessionShell";
 
 export default function DashboardLayout({
@@ -5,5 +6,9 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <SessionShell>{children}</SessionShell>;
+  return (
+    <Suspense fallback={null}>
+      <SessionShell>{children}</SessionShell>
+    </Suspense>
+  );
 }

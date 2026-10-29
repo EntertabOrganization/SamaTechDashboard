@@ -33,10 +33,6 @@ export const cmsNav: CmsNavGroup[] = [
     ],
   },
   {
-    label: "Website",
-    items: [{ label: "Content", href: "/content", icon: "content", area: "users" }],
-  },
-  {
     label: "Settings",
     items: [
       { label: "Availability", href: "/availability", icon: "availability", area: "booking" },

@@ -70,7 +70,7 @@ export default function Page() {
           Keep me signed in
         </label>
 
-        <AuthButton type="submit" disabled={submitting}>Sign in</AuthButton>
+        <AuthButton type="submit" disabled={submitting}>{submitting ? "Signing in?" : "Sign in"}</AuthButton>
       </AuthForm>
     </AuthShell>
   );

@@ -3,7 +3,7 @@ import type { ComponentProps } from "react";
 type Variant = "primary" | "secondary";
 
 const base =
-  "h-11 w-full rounded-lg text-sm font-semibold outline-none transition";
+  "h-11 w-full cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 rounded-lg text-sm font-semibold outline-none transition";
 
 const variants: Record<Variant, string> = {
   primary:

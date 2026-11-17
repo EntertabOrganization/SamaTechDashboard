@@ -1,3 +1,6 @@
+"use client";
+
+import { useFormStatus } from "react-dom";
 import { CalendarIcon, ClockIcon } from "@/Components/dashboard/Layout/icons";
 import ActionButton from "@/Components/dashboard/shared/ActionButton";
 import Avatar from "@/Components/dashboard/shared/Avatar";
@@ -49,6 +52,13 @@ const nextStatus: Partial<
   PENDING: { status: "CONFIRMED", label: "Confirm", canCancel: true },
   CONFIRMED: { status: "COMPLETED", label: "Mark completed", canCancel: true },
 };
+
+function StatusSubmit({ label }: { label: string }) {
+  const { pending } = useFormStatus();
+  return <ActionButton type="submit" variant="dark" icon={<CheckIcon />} className="w-full" disabled={pending}>
+    {pending ? (label === "Confirm" ? "Confirming?" : "Updating?") : label}
+  </ActionButton>;
+}
 
 function HiddenFields({ id, status }: { id?: string; status?: RequestStatus }) {
   return (
@@ -171,9 +181,7 @@ export default function RequestCard({
           {move && (
             <form action={updateStatusAction} className="contents">
               <HiddenFields id={id} status={move.status} />
-              <ActionButton type="submit" variant="dark" icon={<CheckIcon />} className="w-full">
-                {move.label}
-              </ActionButton>
+              <StatusSubmit label={move.label} />
             </form>
           )}
         </div>
